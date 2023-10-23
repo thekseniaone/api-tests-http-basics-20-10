@@ -25,7 +25,7 @@ async function createToken(userName, password){
 }
 
 describe('5 api tests for a user', () => {
-    //Создание пользователя c ошибкой, логин уже используется
+    //Тест: создание пользователя c ошибкой, логин уже используется
     test ('creating a user with a login that is already exist', async ()=> {
         const response = await createUser('test', 'tesT21#2');
         const data = await response.json();
@@ -34,7 +34,7 @@ describe('5 api tests for a user', () => {
         expect(data.message).toBe('User exists!');
     })
 
-// Создание пользователя c ошибкой, пароль не подходит
+//Тест: Создание пользователя c ошибкой, пароль не подходит
     test ('creating a user with a mistake pass', async ()=> {
         const response = await createUser('test', 'tesT212');
         const data = await response.json();
@@ -43,14 +43,14 @@ describe('5 api tests for a user', () => {
         expect(data.message).toBe('Passwords must have at least one non alphanumeric character, one digit (\'0\'-\'9\'), one uppercase (\'A\'-\'Z\'), one lowercase (\'a\'-\'z\'), one special character and Password must be eight characters or longer.');
     })
 
-    // Создание пользователя успешно
+    //Тест: создание пользователя успешно
     test ('successful user creating', async ()=> {
-        const response = await createUser('testuser', 'tesT2%aA3#12341241');
+        const response = await createUser('testuser' + Math.floor(Math.random() * 10000000), 'tesT2%aA3#12341241');
         const data = await response.json();
         expect(response.status).toBe(201);
     })
 
-    // Генерация токена c ошибкой
+    //Тест: генерация токена c ошибкой
     test ('generating a token with an error', async ()=> {
         const response = await createToken('test', 'tesT21#2222');
         const data = await response.json();
@@ -62,7 +62,7 @@ describe('5 api tests for a user', () => {
         expect(data.result).toBe('User authorization failed.');
     })
 
-    // Генерация токена успешно
+    //Тест: генерация токена успешна
     test ('successful token creating', async ()=> {
         const response = await createToken('test', 'tesT21#2');
         const data = await response.json();
